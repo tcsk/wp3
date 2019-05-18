@@ -6,6 +6,7 @@ use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "file".
@@ -35,7 +36,7 @@ class File extends ActiveRecord {
      */
     public function rules() {
         return [
-            [['title', 'filename', 'course_id', 'uploaded_at', 'created_by'], 'required'],
+            [['title', 'filename', 'course_id'], 'required'],
             [['course_id', 'created_by', 'updated_by'], 'integer'],
             [['uploaded_at'], 'safe'],
             [['title', 'filename'], 'string', 'max' => 255],
@@ -93,5 +94,10 @@ class File extends ActiveRecord {
      */
     public static function find() {
         return new FileQuery(get_called_class());
+    }
+
+    public function beforeSave($insert) {
+        $this->uploaded_at = new Expression('NOW()');
+        return parent::beforeSave($insert);
     }
 }

@@ -71,7 +71,8 @@ UploadAsset::register($this);
     <h2>Menetrend</h2>
 
     <p>
-        Válasszon ki egy xls fájlt a dokumentációban megadott formátumban (docs/test.xls), és kattintson a feltölt gombra.
+        Válasszon ki egy xls fájlt a dokumentációban megadott formátumban (docs/test.xls), és kattintson a feltölt
+        gombra.
         Ezzel a jelenlegi menetrend törlődik!
     </p>
 
@@ -93,7 +94,7 @@ UploadAsset::register($this);
             ['class' => 'yii\grid\SerialColumn'],
             'title',
             'description',
-            'deadline'
+            'deadline',
         ],
     ]); ?>
 

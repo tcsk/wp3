@@ -4,6 +4,11 @@ namespace app\controllers;
 
 use app\models\Course;
 use app\models\CourseSearch;
+use app\models\File;
+use app\models\Scedule;
+use DateTime;
+use PHPExcel_IOFactory;
+use thamtech\uuid\helpers\UuidHelper;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -45,9 +50,14 @@ class StudentCourseController extends Controller {
         $dataProvider = new ActiveDataProvider([
             'query' => $model->getScedules(),
         ]);
+        $docDataProvider = new ActiveDataProvider([
+            'query' => $model->getFiles(),
+        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
+            'docDataProvider' => $docDataProvider,
+            'pdf' => false
         ]);
     }
 
@@ -64,10 +74,14 @@ class StudentCourseController extends Controller {
         $dataProvider = new ActiveDataProvider([
             'query' => $model->getScedules(),
         ]);
+        $docDataProvider = new ActiveDataProvider([
+            'query' => $model->getFiles(),
+        ]);
         $content = $this->renderPartial('view', [
             'model' => $this->findModel($id),
             'dataProvider' => $dataProvider,
-            'noButton' => true
+            'docDataProvider' => $docDataProvider,
+            'pdf' => true
         ]);
 
         // setup kartik\mpdf\Pdf component
@@ -91,13 +105,38 @@ class StudentCourseController extends Controller {
             'options' => ['title' => 'Krajee Report Title'],
             // call mPDF methods on the fly
             'methods' => [
-                'SetHeader'=>['WP3 kurzus adatlap'],
-                'SetFooter'=>['{PAGENO}'],
+                'SetHeader' => ['WP3 kurzus adatlap'],
+                'SetFooter' => ['{PAGENO}'],
             ]
         ]);
 
         // return the pdf output as per the destination setting
         return $pdf->render();
+    }
+
+    public function actionUpload() {
+        $post = Yii::$app->request->post();
+        $path = Yii::$app->basePath . '/web/uploads/';
+        if ($_FILES['file']) {
+
+            $file = $_FILES['file']['name'];
+            $tmp = $_FILES['file']['tmp_name'];
+
+            $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+            $uuid = UuidHelper::uuid();
+            $final_file = $uuid . '.' . $ext;
+            $path = $path . strtolower($final_file);
+            if (move_uploaded_file($tmp, $path)) {
+                $file = new File();
+                $file->title = $post['title'];
+                $file->filename = $final_file;
+                $file->course_id = $post['course'];
+                $file->save();
+                return json_encode($file->getErrors());
+            } else {
+                return 'success';
+            }
+        }
     }
 
 }
