@@ -11,4 +11,11 @@ return [
     'Title' => 'Cím',
     'Update' => 'Módosítás',
     'Delete' => 'Törlés',
+    'Name' => 'Név',
+    'Phone' => 'Telefon',
+    'Created By' => 'Feltöltő',
+    'Updated By' => 'Szerkesztő',
+    'Create Instructor' => 'Új Oktató',
+    'Instructors' => 'Oktatók',
+
 ];
