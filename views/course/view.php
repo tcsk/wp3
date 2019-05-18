@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
@@ -9,11 +10,11 @@ use yii\widgets\DetailView;
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Courses'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+YiiAsset::register($this);
 ?>
 <div class="course-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($model->subject->title) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -29,12 +30,36 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'subject_id',
-            'instructor_id',
-            'semester_id',
-            'created_by',
-            'updated_by',
+            [
+                'attribute' => 'subject_id',
+                'value' => function ($data) {
+                    return $data->subject->title;
+                }
+            ],
+            [
+                'attribute' => 'instructor_id',
+                'value' => function ($data) {
+                    return $data->instructor->name;
+                }
+            ],
+            [
+                'attribute' => 'semester_id',
+                'value' => function ($data) {
+                    return $data->semester->semester;
+                }
+            ],
+            [
+                'attribute' => 'created_by',
+                'value' => function ($data) {
+                    return $data->createdBy->username;
+                }
+            ],
+            [
+                'attribute' => 'updated_by',
+                'value' => function ($data) {
+                    return $data->updatedBy->username;
+                }
+            ],
         ],
     ]) ?>
 

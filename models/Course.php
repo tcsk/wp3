@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "course".
@@ -22,38 +25,33 @@ use Yii;
  * @property File[] $files
  * @property Scedule[] $scedules
  */
-class Course extends \yii\db\ActiveRecord
-{
+class Course extends ActiveRecord {
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'course';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id', 'subject_id', 'instructor_id', 'semester_id', 'created_by'], 'required'],
+            [['subject_id', 'instructor_id', 'semester_id'], 'required'],
             [['id', 'subject_id', 'instructor_id', 'semester_id', 'created_by', 'updated_by'], 'integer'],
-            [['id'], 'unique'],
-            [['instructor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instructor::className(), 'targetAttribute' => ['instructor_id' => 'id']],
-            [['semester_id'], 'exist', 'skipOnError' => true, 'targetClass' => Semester::className(), 'targetAttribute' => ['semester_id' => 'id']],
-            [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::className(), 'targetAttribute' => ['subject_id' => 'id']],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
+            [['instructor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instructor::class, 'targetAttribute' => ['instructor_id' => 'id']],
+            [['semester_id'], 'exist', 'skipOnError' => true, 'targetClass' => Semester::class, 'targetAttribute' => ['semester_id' => 'id']],
+            [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::class, 'targetAttribute' => ['subject_id' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
             'subject_id' => Yii::t('app', 'Subject ID'),
@@ -64,68 +62,66 @@ class Course extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getInstructor()
-    {
-        return $this->hasOne(Instructor::className(), ['id' => 'instructor_id']);
+    public function behaviors() {
+        return [
+            BlameableBehavior::class,
+        ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSemester()
-    {
-        return $this->hasOne(Semester::className(), ['id' => 'semester_id']);
+    public function getInstructor() {
+        return $this->hasOne(Instructor::class, ['id' => 'instructor_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSubject()
-    {
-        return $this->hasOne(Subject::className(), ['id' => 'subject_id']);
+    public function getSemester() {
+        return $this->hasOne(Semester::class, ['id' => 'semester_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getCreatedBy()
-    {
-        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    public function getSubject() {
+        return $this->hasOne(Subject::class, ['id' => 'subject_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getUpdatedBy()
-    {
-        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    public function getCreatedBy() {
+        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getFiles()
-    {
-        return $this->hasMany(File::className(), ['course_id' => 'id']);
+    public function getUpdatedBy() {
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getScedules()
-    {
-        return $this->hasMany(Scedule::className(), ['course_id' => 'id']);
+    public function getFiles() {
+        return $this->hasMany(File::class, ['course_id' => 'id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getScedules() {
+        return $this->hasMany(Scedule::class, ['course_id' => 'id']);
     }
 
     /**
      * {@inheritdoc}
      * @return CourseQuery the active query used by this AR class.
      */
-    public static function find()
-    {
+    public static function find() {
         return new CourseQuery(get_called_class());
     }
 }

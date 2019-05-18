@@ -27,12 +27,24 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'subject_id',
-            'instructor_id',
-            'semester_id',
-            'created_by',
-            //'updated_by',
+            [
+                'attribute' => 'subject_id',
+                'value' => function ($data) {
+                    return $data->subject->title;
+                }
+            ],
+            [
+                'attribute' => 'instructor_id',
+                'value' => function ($data) {
+                    return $data->instructor->name;
+                }
+            ],
+            [
+                'attribute' => 'semester_id',
+                'value' => function ($data) {
+                    return $data->semester->semester;
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -32,4 +32,7 @@ return [
     'Update Semester: {semester}' => 'Félév módosítása: {semester}',
     'Update Instructor: {name}' => 'Oktató módosítása: {name}',
     'Update Course: {name}' => 'Kurzus módosítása: {name}',
+    'Subject ID' => 'Tantárgy',
+    'Instructor ID' => 'Oktató',
+    'Semester ID' => 'Félév',
 ];
