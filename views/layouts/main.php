@@ -49,7 +49,7 @@ AppAsset::register($this);
                     ['label' => 'Tantárgyak', 'url' => ['/subject']],
                     ['label' => 'Kurzusok', 'url' => ['/course']],
                     ['label' => 'Oktatók', 'url' => ['/instructor']],
-                    ['label' => 'Szemeszterek', 'url' => ['/semester']],
+                    ['label' => 'Félévek', 'url' => ['/semester']],
                 ]
             ],
             ['label' => 'Admin', 'url' => ['/admin'], 'visible' => Yii::$app->user->can('admin')],

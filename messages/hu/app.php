@@ -16,6 +16,15 @@ return [
     'Created By' => 'Feltöltő',
     'Updated By' => 'Szerkesztő',
     'Create Instructor' => 'Új Oktató',
+    'Create Semester' => 'Új Félév',
+    'Create Subject' => 'Új Tantárgy',
+    'Create Course' => 'Új Kurzus',
     'Instructors' => 'Oktatók',
-
+    'Semesters' => 'Félévek',
+    'Courses' => 'Kurzusok',
+    'Subjects' => 'Tantárgyak',
+    'Semester' => 'Félév',
+    'Code' => 'Tantárgykód',
+    'Description' => 'Leírás',
+    'Save' => 'Rögzít',
 ];
