@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Semester]].
+ * This is the ActiveQuery class for [[Scedule]].
  *
- * @see Semester
+ * @see Scedule
  */
-class SemesterQuery extends \yii\db\ActiveQuery {
+class SceduleQuery extends \yii\db\ActiveQuery {
     /*public function active()
     {
         return $this->andWhere('[[status]]=1');
@@ -15,7 +15,7 @@ class SemesterQuery extends \yii\db\ActiveQuery {
 
     /**
      * {@inheritdoc}
-     * @return Semester[]|array
+     * @return Scedule[]|array
      */
     public function all($db = null) {
         return parent::all($db);
@@ -23,7 +23,7 @@ class SemesterQuery extends \yii\db\ActiveQuery {
 
     /**
      * {@inheritdoc}
-     * @return Semester|array|null
+     * @return Scedule|array|null
      */
     public function one($db = null) {
         return parent::one($db);

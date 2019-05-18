@@ -21,6 +21,8 @@ use yii\widgets\ActiveForm;
             ['prompt' => '-- tantárgy --'])
     ?>
 
+    <?= $form->field($model, 'team')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'instructor_id')
         ->dropDownList(ArrayHelper::map(Instructor::find()->all(), 'id', 'name'),
             ['prompt' => '-- oktató --'])

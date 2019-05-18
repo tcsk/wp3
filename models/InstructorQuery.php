@@ -7,8 +7,7 @@ namespace app\models;
  *
  * @see Instructor
  */
-class InstructorQuery extends \yii\db\ActiveQuery
-{
+class InstructorQuery extends \yii\db\ActiveQuery {
     /*public function active()
     {
         return $this->andWhere('[[status]]=1');
@@ -18,8 +17,7 @@ class InstructorQuery extends \yii\db\ActiveQuery
      * {@inheritdoc}
      * @return Instructor[]|array
      */
-    public function all($db = null)
-    {
+    public function all($db = null) {
         return parent::all($db);
     }
 
@@ -27,8 +25,7 @@ class InstructorQuery extends \yii\db\ActiveQuery
      * {@inheritdoc}
      * @return Instructor|array|null
      */
-    public function one($db = null)
-    {
+    public function one($db = null) {
         return parent::one($db);
     }
 }

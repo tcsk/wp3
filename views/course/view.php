@@ -1,16 +1,20 @@
 <?php
 
+use app\assets\UploadAsset;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\web\YiiAsset;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Course */
+/* @var $dataProvider */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Courses'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-YiiAsset::register($this);
+
+UploadAsset::register($this);
 ?>
 <div class="course-view">
 
@@ -36,6 +40,7 @@ YiiAsset::register($this);
                     return $data->subject->title;
                 }
             ],
+            'team',
             [
                 'attribute' => 'instructor_id',
                 'value' => function ($data) {
@@ -62,5 +67,34 @@ YiiAsset::register($this);
             ],
         ],
     ]) ?>
+
+    <h2>Menetrend</h2>
+
+    <p>
+        Válasszon ki egy xls fájlt a dokumentációban megadott formátumban (docs/test.xls), és kattintson a feltölt gombra.
+        Ezzel a jelenlegi menetrend törlődik!
+    </p>
+
+    <div class="row" style="margin: 25px;">
+        <div class="col-sm-6">
+            <form class="upload-form" method="post" enctype="multipart/form-data">
+                <input class="upload-xls" type="file" accept="application/vnd.ms-excel" name="file"/>
+                <input type="hidden" name="course" value="<?= $model->id ?>">
+                <br>
+                <input class="btn btn-success" type="submit" value="Feltölt">
+            </form>
+            <div class="err"></div>
+        </div>
+    </div>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            'title',
+            'description',
+            'deadline'
+        ],
+    ]); ?>
 
 </div>

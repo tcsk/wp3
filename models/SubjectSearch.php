@@ -9,13 +9,11 @@ use app\models\Subject;
 /**
  * SubjectSearch represents the model behind the search form of `app\models\Subject`.
  */
-class SubjectSearch extends Subject
-{
+class SubjectSearch extends Subject {
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'created_by', 'updated_by'], 'integer'],
             [['title', 'code', 'description'], 'safe'],
@@ -25,8 +23,7 @@ class SubjectSearch extends Subject
     /**
      * {@inheritdoc}
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -38,8 +35,7 @@ class SubjectSearch extends Subject
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Subject::find();
 
         // add conditions that should always apply here

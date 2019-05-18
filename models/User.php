@@ -20,6 +20,7 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface {
 
     private $_oldAttributes;
+
     /**
      * {@inheritdoc}
      */

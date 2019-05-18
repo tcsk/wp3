@@ -9,13 +9,11 @@ use app\models\Semester;
 /**
  * SemesterSearch represents the model behind the search form of `app\models\Semester`.
  */
-class SemesterSearch extends Semester
-{
+class SemesterSearch extends Semester {
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'created_by', 'updated_by'], 'integer'],
             [['semester'], 'safe'],
@@ -25,8 +23,7 @@ class SemesterSearch extends Semester
     /**
      * {@inheritdoc}
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -38,8 +35,7 @@ class SemesterSearch extends Semester
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Semester::find();
 
         // add conditions that should always apply here

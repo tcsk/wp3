@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->subject->title;
                 }
             ],
+            'team',
             [
                 'attribute' => 'instructor_id',
                 'value' => function ($data) {

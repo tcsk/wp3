@@ -4,28 +4,25 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Course;
 
 /**
  * CourseSearch represents the model behind the search form of `app\models\Course`.
  */
-class CourseSearch extends Course
-{
+class CourseSearch extends Course {
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'subject_id', 'instructor_id', 'semester_id', 'created_by', 'updated_by'], 'integer'],
+            ['team', 'string'],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -37,8 +34,7 @@ class CourseSearch extends Course
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Course::find();
 
         // add conditions that should always apply here
@@ -58,6 +54,7 @@ class CourseSearch extends Course
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'team' => $this->team,
             'subject_id' => $this->subject_id,
             'instructor_id' => $this->instructor_id,
             'semester_id' => $this->semester_id,

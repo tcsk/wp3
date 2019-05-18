@@ -13,8 +13,8 @@ use yii\filters\VerbFilter;
 /**
  * InstructorController implements the CRUD actions for Instructor model.
  */
-class InstructorController extends Controller
-{
+class InstructorController extends Controller {
+
     /**
      * {@inheritdoc}
      */
@@ -42,8 +42,7 @@ class InstructorController extends Controller
      * Lists all Instructor models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new InstructorSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -59,8 +58,7 @@ class InstructorController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -71,8 +69,7 @@ class InstructorController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new Instructor();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -91,8 +88,7 @@ class InstructorController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -111,8 +107,7 @@ class InstructorController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -125,8 +120,7 @@ class InstructorController extends Controller
      * @return Instructor the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Instructor::findOne($id)) !== null) {
             return $model;
         }

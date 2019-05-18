@@ -35,4 +35,5 @@ return [
     'Subject ID' => 'Tantárgy',
     'Instructor ID' => 'Oktató',
     'Semester ID' => 'Félév',
+    'Deadline' => 'Határidő'
 ];

@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[Semester]].
+ * This is the ActiveQuery class for [[File]].
  *
- * @see Semester
+ * @see File
  */
-class SemesterQuery extends \yii\db\ActiveQuery {
+class FileQuery extends \yii\db\ActiveQuery {
     /*public function active()
     {
         return $this->andWhere('[[status]]=1');
@@ -15,7 +15,7 @@ class SemesterQuery extends \yii\db\ActiveQuery {
 
     /**
      * {@inheritdoc}
-     * @return Semester[]|array
+     * @return File[]|array
      */
     public function all($db = null) {
         return parent::all($db);
@@ -23,7 +23,7 @@ class SemesterQuery extends \yii\db\ActiveQuery {
 
     /**
      * {@inheritdoc}
-     * @return Semester|array|null
+     * @return File|array|null
      */
     public function one($db = null) {
         return parent::one($db);

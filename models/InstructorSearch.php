@@ -9,13 +9,11 @@ use app\models\Instructor;
 /**
  * InstructorSearch represents the model behind the search form of `app\models\Instructor`.
  */
-class InstructorSearch extends Instructor
-{
+class InstructorSearch extends Instructor {
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'created_by', 'updated_by'], 'integer'],
             [['name', 'email', 'phone'], 'safe'],
@@ -25,8 +23,7 @@ class InstructorSearch extends Instructor
     /**
      * {@inheritdoc}
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -38,8 +35,7 @@ class InstructorSearch extends Instructor
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Instructor::find();
 
         // add conditions that should always apply here

@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  * This is the model class for table "course".
  *
  * @property string $id
+ * @property string $team
  * @property string $subject_id
  * @property string $instructor_id
  * @property string $semester_id
@@ -40,6 +41,7 @@ class Course extends ActiveRecord {
         return [
             [['subject_id', 'instructor_id', 'semester_id'], 'required'],
             [['id', 'subject_id', 'instructor_id', 'semester_id', 'created_by', 'updated_by'], 'integer'],
+            ['team', 'string'],
             [['instructor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instructor::class, 'targetAttribute' => ['instructor_id' => 'id']],
             [['semester_id'], 'exist', 'skipOnError' => true, 'targetClass' => Semester::class, 'targetAttribute' => ['semester_id' => 'id']],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::class, 'targetAttribute' => ['subject_id' => 'id']],
@@ -54,6 +56,7 @@ class Course extends ActiveRecord {
     public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
+            'team' => Yii::t('app', 'Csoport'),
             'subject_id' => Yii::t('app', 'Subject ID'),
             'instructor_id' => Yii::t('app', 'Instructor ID'),
             'semester_id' => Yii::t('app', 'Semester ID'),

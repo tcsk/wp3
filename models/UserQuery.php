@@ -9,8 +9,7 @@ use yii\db\ActiveQuery;
  *
  * @see User
  */
-class UserQuery extends ActiveQuery
-{
+class UserQuery extends ActiveQuery {
     /*public function active()
     {
         return $this->andWhere('[[status]]=1');
@@ -20,8 +19,7 @@ class UserQuery extends ActiveQuery
      * {@inheritdoc}
      * @return User[]|array
      */
-    public function all($db = null)
-    {
+    public function all($db = null) {
         return parent::all($db);
     }
 
@@ -29,8 +27,7 @@ class UserQuery extends ActiveQuery
      * {@inheritdoc}
      * @return User|array|null
      */
-    public function one($db = null)
-    {
+    public function one($db = null) {
         return parent::one($db);
     }
 }
