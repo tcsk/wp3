@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="semester-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($model->semester) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -29,10 +29,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'semester',
-            'created_by',
-            'updated_by',
+            [
+                'attribute' => 'created_by',
+                'value' => function ($data) {
+                    return $data->createdBy->username;
+                }
+            ],
+            [
+                'attribute' => 'updated_by',
+                'value' => function ($data) {
+                    return $data->updatedBy->username;
+                }
+            ],
         ],
     ]) ?>
 

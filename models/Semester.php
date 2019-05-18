@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "semester".
@@ -16,36 +19,32 @@ use Yii;
  * @property User $createdBy
  * @property User $updatedBy
  */
-class Semester extends \yii\db\ActiveRecord
-{
+class Semester extends ActiveRecord {
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'semester';
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['id', 'semester', 'created_by'], 'required'],
+            [['semester'], 'required'],
             [['id', 'created_by', 'updated_by'], 'integer'],
             [['semester'], 'string', 'max' => 45],
             [['id'], 'unique'],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => Yii::t('app', 'ID'),
             'semester' => Yii::t('app', 'Semester'),
@@ -54,36 +53,38 @@ class Semester extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCourses()
-    {
-        return $this->hasMany(Course::className(), ['semester_id' => 'id']);
+    public function behaviors() {
+        return [
+            BlameableBehavior::class,
+        ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getCreatedBy()
-    {
-        return $this->hasOne(User::className(), ['id' => 'created_by']);
+    public function getCourses() {
+        return $this->hasMany(Course::class, ['semester_id' => 'id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getUpdatedBy()
-    {
-        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    public function getCreatedBy() {
+        return $this->hasOne(User::class, ['id' => 'created_by']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getUpdatedBy() {
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
     /**
      * {@inheritdoc}
      * @return SemesterQuery the active query used by this AR class.
      */
-    public static function find()
-    {
+    public static function find() {
         return new SemesterQuery(get_called_class());
     }
 }

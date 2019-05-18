@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Semester */
 
-$this->title = Yii::t('app', 'Update Semester: {name}', [
-    'name' => $model->id,
+$this->title = Yii::t('app', 'Update Semester: {semester}', [
+    'semester' => $model->semester,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Semesters'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];

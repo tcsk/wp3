@@ -27,4 +27,9 @@ return [
     'Code' => 'Tantárgykód',
     'Description' => 'Leírás',
     'Save' => 'Rögzít',
+    'Are you sure you want to delete this item?' => 'Biztosan törölni akarja ezt az elemet?',
+    'Update Subject: {name}' => 'Tantárgy módosítása: {name}',
+    'Update Semester: {semester}' => 'Félév módosítása: {semester}',
+    'Update Instructor: {name}' => 'Oktató módosítása: {name}',
+    'Update Course: {name}' => 'Kurzus módosítása: {name}',
 ];
