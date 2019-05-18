@@ -42,6 +42,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Főoldal', 'url' => ['/']],
+            ['label' => 'Kurzusok', 'url' => ['/student-course'], 'visible' => !Yii::$app->user->isGuest],
             [
                 'label' => 'Szerkesztő',
                 'visible' => Yii::$app->user->can('teacher'),
