@@ -42,6 +42,16 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Főoldal', 'url' => ['/']],
+            [
+                'label' => 'Szerkesztő',
+                'visible' => Yii::$app->user->can('teacher'),
+                'items' => [
+                    ['label' => 'Tantárgyak', 'url' => ['/subject']],
+                    ['label' => 'Kurzusok', 'url' => ['/course']],
+                    ['label' => 'Oktatók', 'url' => ['/instructor']],
+                    ['label' => 'Szemeszterek', 'url' => ['/semester']],
+                ]
+            ],
             ['label' => 'Admin', 'url' => ['/admin'], 'visible' => Yii::$app->user->can('admin')],
             ['label' => 'Regisztráció', 'url' => ['/site/register'], 'visible' => Yii::$app->user->isGuest],
             Yii::$app->user->isGuest ? (
