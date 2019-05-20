@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\web\YiiAsset;
 use yii\widgets\DetailView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Course */
@@ -87,9 +88,9 @@ UploadAsset::register($this);
             <div class="err"></div>
         </div>
     </div>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'summary' => false,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'title',
@@ -97,5 +98,4 @@ UploadAsset::register($this);
             'deadline',
         ],
     ]); ?>
-
 </div>

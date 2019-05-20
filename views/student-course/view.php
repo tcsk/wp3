@@ -3,8 +3,8 @@
 use app\assets\UploadAsset;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\web\YiiAsset;
 use yii\widgets\DetailView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Course */
@@ -71,6 +71,7 @@ UploadAsset::register($this);
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'summary' => false,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'title',
@@ -106,6 +107,7 @@ UploadAsset::register($this);
         </div>
     <?php endif; ?>
 
+
     <?= GridView::widget([
         'dataProvider' => $docDataProvider,
         'columns' => [
@@ -114,7 +116,7 @@ UploadAsset::register($this);
                 'format' => 'raw',
                 'attribute' => 'title',
                 'value' => function ($data) {
-                    return '<a href="/uploads/' . $data->filename . '" target="_blank">' . "$data->title" . '</a>';
+                    return "<a href='/uploads/$data->filename'  download>$data->title</a>";
                 }
             ],
             [
