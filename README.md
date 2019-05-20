@@ -10,7 +10,8 @@
 
 1. git clone https://github.com/tcsk/wp3.git
 2. cd wp3
-3. composer install
-4. set correct credentials in config/db.php
-5. set virtualhost document root to path/to/project/web
-6. enjoj :)
+3. use Docs/wp3_dev.sql to create tables
+4. composer install
+5. set correct credentials in config/db.php
+6. set virtualhost document root to path/to/project/web
+7. enjoj :)
