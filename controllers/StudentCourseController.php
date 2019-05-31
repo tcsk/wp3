@@ -5,9 +5,6 @@ namespace app\controllers;
 use app\models\Course;
 use app\models\CourseSearch;
 use app\models\File;
-use app\models\Scedule;
-use DateTime;
-use PHPExcel_IOFactory;
 use thamtech\uuid\helpers\UuidHelper;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -86,24 +83,14 @@ class StudentCourseController extends Controller {
 
         // setup kartik\mpdf\Pdf component
         $pdf = new Pdf([
-            // set to use core fonts only
             'mode' => Pdf::MODE_UTF8,
-            // A4 paper format
             'format' => Pdf::FORMAT_A4,
-            // portrait orientation
             'orientation' => Pdf::ORIENT_PORTRAIT,
-            // stream to browser inline
             'destination' => Pdf::DEST_BROWSER,
-            // your html content input
             'content' => $content,
-            // format content from your own css file if needed or use the
-            // enhanced bootstrap css built by Krajee for mPDF formatting
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
-            // any css to be embedded if required
             'cssInline' => '.kv-heading-1{font-size:18px}',
-            // set mPDF properties on the fly
             'options' => ['title' => 'Krajee Report Title'],
-            // call mPDF methods on the fly
             'methods' => [
                 'SetHeader' => ['WP3 kurzus adatlap'],
                 'SetFooter' => ['{PAGENO}'],
@@ -132,10 +119,26 @@ class StudentCourseController extends Controller {
                 $file->filename = $final_file;
                 $file->course_id = $post['course'];
                 $file->save();
+                /** @noinspection PhpComposerExtensionStubsInspection */
                 return json_encode($file->getErrors());
             } else {
                 return 'success';
             }
+        }
+        return 'failed';
+    }
+
+    public function actionDelete($id) {
+        $model = File::findOne($id);
+        if (!(Yii::$app->user->can('teacher') || $model->created_by == Yii::$app->user->id)) {
+            throw new ForbiddenHttpException(Yii::t('app', 'Nincs jogosultsága a művelet végrehajtásához.'));
+        }
+        if ($model !== null) {
+            $id = $model->course_id;
+            $model->delete();
+            $this->redirect(['view', 'id' => $id]);
+        } else {
+            throw new NotFoundHttpException(Yii::t('app', 'A törlésre jelölt dokumentum nem található.'));
         }
     }
 

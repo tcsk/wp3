@@ -4,7 +4,7 @@ use app\assets\UploadAsset;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use yii\widgets\Pjax;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Course */
@@ -134,7 +134,13 @@ UploadAsset::register($this);
                         return Yii::$app->user->can('teacher') ||
                             $model->created_by == Yii::$app->user->id;
                     }
-                ]
+                ],
+                'urlCreator' => function ($action, $model) {
+                    if ($action === 'delete') {
+                        $url = Url::to(['student-course/delete', 'id' => $model->id]);
+                        return $url;
+                    }
+                }
             ],
         ],
     ]); ?>
