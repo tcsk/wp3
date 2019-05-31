@@ -100,16 +100,19 @@ class InstructorController extends Controller {
         ]);
     }
 
-    /**
-     * Deletes an existing Instructor model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id) {
-        $this->findModel($id)->delete();
 
+    public function actionDelete($id) {
+        $model = $this->findModel($id);
+        foreach ($model->courses as $course) {
+            foreach ($course->files as $file) {
+                $file->delete();
+            }
+            foreach ($course->scedules as $scedule) {
+                $scedule->delete();
+            }
+            $course->delete();
+        }
+        $model->delete();
         return $this->redirect(['index']);
     }
 
