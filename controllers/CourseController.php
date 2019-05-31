@@ -121,14 +121,7 @@ class CourseController extends Controller {
      * @throws Throwable
      */
     public function actionDelete($id) {
-        $model = $this->findModel($id);
-        foreach ($model->files as $file) {
-            $file->delete();
-        }
-        foreach ($model->scedules as $scedule) {
-            $scedule->delete();
-        }
-        $model->delete();
+        $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }
 

@@ -93,4 +93,11 @@ class Instructor extends ActiveRecord {
     public static function find() {
         return new InstructorQuery(get_called_class());
     }
+
+    public function beforeDelete() {
+        foreach ($this->courses as $course) {
+            $course->delete();
+        }
+        return parent::beforeDelete();
+    }
 }

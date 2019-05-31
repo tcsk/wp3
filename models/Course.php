@@ -127,4 +127,14 @@ class Course extends ActiveRecord {
     public static function find() {
         return new CourseQuery(get_called_class());
     }
+
+    public function beforeDelete() {
+        foreach ($this->files as $file) {
+            $file->delete();
+        }
+        foreach ($this->scedules as $scedule) {
+            $scedule->delete();
+        }
+        return parent::beforeDelete();
+    }
 }

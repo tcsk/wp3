@@ -102,17 +102,7 @@ class InstructorController extends Controller {
 
 
     public function actionDelete($id) {
-        $model = $this->findModel($id);
-        foreach ($model->courses as $course) {
-            foreach ($course->files as $file) {
-                $file->delete();
-            }
-            foreach ($course->scedules as $scedule) {
-                $scedule->delete();
-            }
-            $course->delete();
-        }
-        $model->delete();
+        $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }
 

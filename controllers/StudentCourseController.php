@@ -130,16 +130,12 @@ class StudentCourseController extends Controller {
 
     public function actionDelete($id) {
         $model = File::findOne($id);
-        if (!(Yii::$app->user->can('teacher') || $model->created_by == Yii::$app->user->id)) {
-            throw new ForbiddenHttpException(Yii::t('app', 'Nincs jogosultsága a művelet végrehajtásához.'));
-        }
-        if ($model !== null) {
-            $id = $model->course_id;
-            $model->delete();
-            $this->redirect(['view', 'id' => $id]);
-        } else {
+        if ($model === null) {
             throw new NotFoundHttpException(Yii::t('app', 'A törlésre jelölt dokumentum nem található.'));
         }
+        $id = $model->course_id;
+        $model->delete();
+        $this->redirect(['view', 'id' => $id]);
     }
 
 }

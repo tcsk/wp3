@@ -100,4 +100,11 @@ class File extends ActiveRecord {
         $this->uploaded_at = new Expression('NOW()');
         return parent::beforeSave($insert);
     }
+
+    public function beforeDelete() {
+        if (!(Yii::$app->user->can('teacher') || $this->created_by == Yii::$app->user->id)) {
+            throw new ForbiddenHttpException(Yii::t('app', 'Nincs jogosultsága a művelet végrehajtásához.'));
+        }
+        return parent::beforeDelete();
+    }
 }
