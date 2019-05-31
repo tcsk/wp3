@@ -14,4 +14,4 @@
 4. composer install
 5. set correct credentials in config/db.php
 6. set virtualhost document root to path/to/project/web
-7. enjoj :)
+7. enjoy :)
