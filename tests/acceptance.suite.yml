@@ -2,7 +2,7 @@ class_name: AcceptanceTester
 modules:
     enabled:
         - WebDriver:
-            url: https://dev.afp2.loc/
+            url: https://dev.wp3.loc/
             browser: chrome
         - Yii2:
             part: orm
