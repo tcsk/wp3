@@ -4,16 +4,16 @@
 namespace app\components\calendar\persistence;
 
 use app\components\calendar\persistence\contracts\EventDAO;
+use PDO;
 use yii\base\InvalidArgumentException;
-use \Yii;
 
 class EventPdoDAO implements EventDAO {
 
     private $_table_name = 'scedule';
     private $_pdo;
 
-    public function __construct() {
-        $this->_pdo = Yii::$app->getDb()->pdo;
+    public function __construct(PDO $pdo) {
+        $this->_pdo = $pdo;
     }
 
     public function findById(int $id) {
