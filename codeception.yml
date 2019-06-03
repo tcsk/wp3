@@ -12,7 +12,15 @@ modules:
     config:
         Yii2:
             configFile: 'config/test.php'
-
+            #part: [orm, fixtures]
+            entryScript: index-test.php
+        Db:
+            dsn: 'mysql:host=localhost;dbname=wp3_test'
+            user: 'root'
+            password:
+            dump: tests/_data/wp3_dev.sql
+            cleanup: false # reload dump between tests
+            populate: true # load dump before all tests
 # To enable code coverage:
 #coverage:
 #    #c3_url: http://localhost:8080/index-test.php/

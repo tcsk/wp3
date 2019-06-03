@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\calendar\persistence\EventPdoDAO;
 use app\models\RegisterForm;
 use Yii;
 use yii\filters\AccessControl;
