@@ -8,6 +8,9 @@ use Yii;
 
 class EventPdoDAOTest extends Unit {
 
+    /**
+     * @var EventPdoDAO
+     */
     private $_eventDAO;
 
     public function setUp() {
