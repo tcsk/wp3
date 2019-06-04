@@ -4,18 +4,27 @@ namespace tests\unit\models;
 
 use Codeception\Test\Unit;
 use app\components\calendar\persistence\EventPdoDAO;
+use Yii;
 
 class EventPdoDAOTest extends Unit {
 
+    /**
+     * @var EventPdoDAO
+     */
+    private $_eventDAO;
+
+    public function setUp() {
+        $this->_eventDAO = new EventPdoDAO(Yii::$app->getDb()->pdo);
+        return parent::setUp();
+    }
+
     public function testFindEventByIdIsSuccessfulWithCorrectId() {
-        $eventDAO = new EventPdoDAO();
-        $event = $eventDAO->findById(1);
+        $event = $this->_eventDAO->findById(1);
         expect($event['title'])->equals('Konzultáció');
     }
 
     public function testFindEventByIdReturnsNullWithWrongId() {
-        $eventDAO = new EventPdoDAO();
-        $event = $eventDAO->findById(10);
+        $event = $this->_eventDAO->findById(10);
         expect($event)->equals(null);
     }
 
@@ -23,8 +32,7 @@ class EventPdoDAOTest extends Unit {
      * @expectedException TypeError
      */
     public function testFindEventByIdThrowsTypeErrorExceptionWithIncorrectParamType() {
-        $eventDAO = new EventPdoDAO();
-        $eventDAO->findById('a');
+        $this->_eventDAO->findById('a');
     }
 
     /** @noinspection PhpFullyQualifiedNameUsageInspection */
@@ -34,8 +42,7 @@ class EventPdoDAOTest extends Unit {
      * @expectedExceptionMessage The $id parameter must be positive integer.
      */
     public function testFindEventByIdThrowsInvalidArgumentExceptionWithNegativeId() {
-        $eventDAO = new EventPdoDAO();
-        $eventDAO->findById(-1);
+        $this->_eventDAO->findById(-1);
     }
 
     public function testSaveIsSuccessfulWithCorrectData() {
@@ -46,9 +53,8 @@ class EventPdoDAOTest extends Unit {
             'created_by' => 1,
             'updated_by' => 1,
         ];
-        $eventDAO = new EventPdoDAO();
-        expect($id = $eventDAO->save($data));
-        $event = $eventDAO->findById($id);
+        expect($id = $this->_eventDAO->save($data));
+        $event = $this->_eventDAO->findById($id);
         expect($event['title'])->equals('Unit test 1');
     }
 
@@ -61,8 +67,7 @@ class EventPdoDAOTest extends Unit {
             'course_id' => 3,
             'created_by' => 1,
         ];
-        $eventDAO = new EventPdoDAO();
-        $eventDAO->save($data);
+        $this->_eventDAO->save($data);
     }
 
     /**
@@ -76,8 +81,7 @@ class EventPdoDAOTest extends Unit {
             'created_by' => 1,
             'updated_by' => 1,
         ];
-        $eventDAO = new EventPdoDAO();
-        $eventDAO->save($data);
+        $this->_eventDAO->save($data);
     }
 
     /**
@@ -91,20 +95,17 @@ class EventPdoDAOTest extends Unit {
             'created_by' => 100,
             'updated_by' => 1,
         ];
-        $eventDAO = new EventPdoDAO();
-        $eventDAO->save($data);
+        $this->_eventDAO->save($data);
     }
 
     public function testFindNextEventReturnsNullIfNotExists() {
-        $eventDAO = new EventPdoDAO();
-        $event = $eventDAO->findNext();
+        $event = $this->_eventDAO->findNext();
         expect($event)->equals(null);
     }
 
     public function testFindNextEventReturnsCorrectDataIfExists() {
         $startDate = time();
         $date = date('Y-m-d H:i:s', strtotime('+1 day', $startDate));
-        $eventDAO = new EventPdoDAO();
         $data = [
             'title' => 'Unit test 5',
             'deadline' => $date,
@@ -112,20 +113,18 @@ class EventPdoDAOTest extends Unit {
             'created_by' => 1,
             'updated_by' => 1,
         ];
-        $eventDAO->save($data);
-        $event = $eventDAO->findNext();
+        $this->_eventDAO->save($data);
+        $event = $this->_eventDAO->findNext();
         expect($event['title'])->equals('Unit test 5');
     }
 
     public function testDeleteEventIsSuccessfulWithCorrectId() {
-        $eventDAO = new EventPdoDAO();
-        expect($eventDAO->delete(1));
-        expect($eventDAO->findById(1))->equals(null);
+        expect($this->_eventDAO->delete(1));
+        expect($this->_eventDAO->findById(1))->equals(null);
     }
 
     public function testDeleteEventReturnsFalseWithNonExistingId() {
-        $eventDAO = new EventPdoDAO();
-        expect($eventDAO->delete(10))->false();
+        expect($this->_eventDAO->delete(10))->false();
     }
 
     public function testUpdateIsSuccessfulWithCorrectData() {
@@ -137,9 +136,8 @@ class EventPdoDAOTest extends Unit {
             'created_by' => 1,
             'updated_by' => 1,
         ];
-        $eventDAO = new EventPdoDAO();
-        expect($eventDAO->update($data));
-        $event = $eventDAO->findById($data['id']);
+        expect($this->_eventDAO->update($data));
+        $event = $this->_eventDAO->findById($data['id']);
         expect($event['title'])->equals('Unit test 1');
     }
 
@@ -152,8 +150,7 @@ class EventPdoDAOTest extends Unit {
             'created_by' => 1,
             'updated_by' => 1,
         ];
-        $eventDAO = new EventPdoDAO();
-        expect($eventDAO->update($data))->false();
+        expect($this->_eventDAO->update($data))->false();
     }
 
     /**
@@ -166,8 +163,7 @@ class EventPdoDAOTest extends Unit {
             'course_id' => 3,
             'created_by' => 1,
         ];
-        $eventDAO = new EventPdoDAO();
-        $eventDAO->update($data);
+        $this->_eventDAO->update($data);
     }
 
     /**
@@ -182,8 +178,7 @@ class EventPdoDAOTest extends Unit {
             'created_by' => 1,
             'updated_by' => 1,
         ];
-        $eventDAO = new EventPdoDAO();
-        $eventDAO->update($data);
+        $this->_eventDAO->update($data);
     }
 
     /**
@@ -198,8 +193,7 @@ class EventPdoDAOTest extends Unit {
             'created_by' => 100,
             'updated_by' => 1,
         ];
-        $eventDAO = new EventPdoDAO();
-        $eventDAO->update($data);
+        $this->_eventDAO->update($data);
     }
 
 }

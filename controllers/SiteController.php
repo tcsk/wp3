@@ -2,9 +2,17 @@
 
 namespace app\controllers;
 
-use app\components\calendar\persistence\EventPdoDAO;
+use app\components\calendar\factory\EventListFactory;
+use app\components\calendar\persistence\EventListPdoDAO;
+use app\components\calendar\repository\EventListRepository;
+use app\components\calendar\strategy\GetMonthlyEventListStrategy;
+use app\components\calendar\strategy\GetWeeklyEventListStrategy;
+use DateTime;
+use yii\base\InvalidConfigException;
+use yii\di\Container;
 use app\models\RegisterForm;
 use Yii;
+use yii\di\NotInstantiableException;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -13,6 +21,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 
 class SiteController extends Controller {
+
     /**
      * {@inheritdoc}
      */
@@ -53,13 +62,35 @@ class SiteController extends Controller {
         ];
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
     public function actionIndex() {
-        return $this->render('index');
+        /* $container = new Container();
+         $container->set('app\components\calendar\strategy\contracts\GetEventListStrategy', [
+             'class' => 'app\components\calendar\strategy\GetWeeklyEventListStrategy',
+         ]);
+         $container->set('EventListRepository', 'app\components\calendar\repository\EventListRepository');
+         $eventListRepository = $container->get('EventListRepository');
+         $eventListRepository->getEventList();*/
+
+        /*$el = new EventListPdoDAO(Yii::$app->getDb()->getMasterPdo());
+        $array = $el->getEventList(new DateTime('2019-02-23 00:00:00'), new DateTime('2019-05-10'));
+        echo '<pre>';
+        print_r($array);
+        echo '</pre>';*/
+
+        /*$dao = new EventListPdoDAO(Yii::$app->getDb()->getMasterPdo());
+        $strategy = new GetWeeklyEventListStrategy($dao);
+        $factory = new EventListFactory();
+        $repository = new EventListRepository($strategy, $factory);
+        $eventList = $repository->getEventList();*/
+
+        $factory = new EventListFactory();
+        $eventList = $factory->makeListByPeriodLength('monthly');
+
+        echo '<pre>';
+        print_r($eventList->getEventList());
+        echo '</pre>';
+
+        //return $this->render('index');
     }
 
     /**

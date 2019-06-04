@@ -1,6 +1,5 @@
 <?php
 
-
 namespace app\components\calendar\persistence\contracts;
 
 interface EventDAO {
